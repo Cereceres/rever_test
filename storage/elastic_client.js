@@ -6,9 +6,21 @@ module.exports = {
     insert: async (log)=>{
         const timestamp = new Date(Date.now())
         let formatted_date = timestamp.getDate() + "-" + (timestamp.getMonth() + 1) + "-" + timestamp.getFullYear()
-        await client.index({
+        const res = await client.index({
             index: formatted_date,
             body: log
           })
+        console.log('res ', res);
+        return res
+    },
+    find: async(query, index)=>{
+        const result = await client.search({
+            index: index,
+            body: {
+              query
+            }
+          })
+            console.log('results ', result.body);
+          return result
     }
 }
